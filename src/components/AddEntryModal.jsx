@@ -44,6 +44,24 @@ const AddEntryModal = ({ onClose }) => {
    // Prevent page refresh
    e.preventDefault();
 
+    // Simple validation
+   if (
+     !formData.title ||
+     !formData.date ||
+     !formData.imageUrl ||
+     !formData.content
+   ) {
+     // Show DaisyUI alert
+     setError("Please fill in all fields.");
+
+
+     return;
+   }
+
+
+   // Clear error if successful
+   setError("");
+
 
      // For now just log data
    console.log(formData);
