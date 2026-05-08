@@ -5,162 +5,130 @@
 import { useState } from "react";
 
 
-// This component receives an onClose prop from App.jsx
-const AddEntryModal = ({ onClose }) => {
- // useState stores all form input values in ONE object
- const [formData, setFormData] = useState({
-   // Initial values start empty
-   title: "",
-   date: "",
-   imageUrl: "",
-   content: "",
- });
+const AddEntryModal = ({ onClose, onAddEntry }) => {
+  const [formData, setFormData] = useState({
+    title: "",
+    date: "",
+    imageUrl: "",
+    content: "",
+  });
 
 
- // Stores validation error message
- const [error, setError] = useState("");
+  const [error, setError] = useState("");
 
 
- // Runs every time user types into an input
- const handleChange = (e) => {
-   // Extract name + value from input
-   const { name, value } = e.target;
+  const handleChange = (e) => {
+    const { name, value } = e.target;
 
 
-   // Update formData state
-   setFormData({
-     // Copy existing values
-     ...formData,
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+  };
 
 
-     // Update only the changed field
-     [name]: value,
-   });
- };
+  const handleSubmit = (e) => {
+    e.preventDefault();
 
 
- // Runs when form is submitted
- const handleSubmit = (e) => {
-   // Prevent page refresh
-   e.preventDefault();
-
-    // Simple validation
-   if (
-     !formData.title ||
-     !formData.date ||
-     !formData.imageUrl ||
-     !formData.content
-   ) {
-     // Show DaisyUI alert
-     setError("Please fill in all fields.");
+    if (
+      !formData.title ||
+      !formData.date ||
+      !formData.imageUrl ||
+      !formData.content
+    ) {
+      setError("Please fill in all fields.");
+      return;
+    }
 
 
-     return;
-   }
+    const newEntry = {
+      id: crypto.randomUUID(),
+      title: formData.title,
+      date: formData.date,
+      imageUrl: formData.imageUrl,
+      content: formData.content,
+    };
 
 
-   // Clear error if successful
-   setError("");
+    onAddEntry(newEntry);
+    onClose();
+  };
 
 
-     // For now just log data
-   console.log(formData);
+  return (
+    <div className="modal modal-open">
+      <div className="modal-box">
+        <h2 className="text-2xl font-bold mb-4">
+          Add Diary Entry
+        </h2>
 
 
-   // Close modal
-   onClose();
- };
+        {error && (
+          <div className="alert alert-error mb-4">
+            <span>{error}</span>
+          </div>
+        )}
 
 
- return (
-   // DaisyUI modal
-   <div className="modal modal-open">
-     {/* Modal container */}
-     <div className="modal-box">
-       {/* Modal title */}
-       <h2 className="text-2xl font-bold mb-4">Add Diary Entry</h2>
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <input
+            name="title"
+            type="text"
+            placeholder="Title"
+            value={formData.title}
+            onChange={handleChange}
+            className="input input-bordered w-full"
+          />
 
 
-       {/* DaisyUI alert */}
-       {error && (
-         <div className="alert alert-error mb-4">
-           <span>{error}</span>
-         </div>
-       )}
+          <input
+            name="date"
+            type="date"
+            value={formData.date}
+            onChange={handleChange}
+            className="input input-bordered w-full"
+          />
 
 
-       {/* Form */}
-       <form onSubmit={handleSubmit} className="space-y-4">
-         {/* TITLE INPUT */}
-         <input
-           name="title"
-           type="text"
-           placeholder="Title"
-           value={formData.title}
-           onChange={handleChange}
-           // DaisyUI input
-           className="input input-bordered w-full"
-         />
+          <input
+            name="imageUrl"
+            type="text"
+            placeholder="Image URL"
+            value={formData.imageUrl}
+            onChange={handleChange}
+            className="input input-bordered w-full"
+          />
 
 
-         {/* DATE INPUT */}
-         <input
-           name="date"
-           type="date"
-           value={formData.date}
-           onChange={handleChange}
-           className="input input-bordered w-full"
-         />
+          <textarea
+            name="content"
+            placeholder="Content"
+            value={formData.content}
+            onChange={handleChange}
+            className="textarea textarea-bordered w-full"
+          ></textarea>
 
 
-         {/* IMAGE URL INPUT */}
-         <input
-           name="imageUrl"
-           type="text"
-           placeholder="Image URL"
-           value={formData.imageUrl}
-           onChange={handleChange}
-           className="input input-bordered w-full"
-         />
+          <div className="modal-action">
+            <button
+              type="button"
+              onClick={onClose}
+              className="btn"
+            >
+              Cancel
+            </button>
 
 
-         {/* CONTENT TEXTAREA */}
-         <textarea
-           name="content"
-           placeholder="Content"
-           value={formData.content}
-           onChange={handleChange}
-           // DaisyUI textarea
-           className="textarea textarea-bordered w-full"
-         ></textarea>
-
-
-         {/* Modal action buttons */}
-         <div className="modal-action">
-           {/* Cancel button */}
-           <button
-             type="button"
-             onClick={onClose}
-             // DaisyUI button
-             className="btn"
-           >
-             Cancel
-           </button>
-
-
-           {/* Save button */}
-           <button
-             type="submit"
-             // DaisyUI primary button
-             className="btn btn-primary"
-           >
-             Save Entry
-           </button>
-         </div>
-       </form>
-     </div>
-   </div>
- );
+            <button type="submit" className="btn btn-primary">
+              Save Entry
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  );
 };
 
 
