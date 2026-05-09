@@ -45,10 +45,18 @@ function App() {
  // ---------------------------------------------------
  // Receives new entry object from AddEntryModal
  const handleAddEntry = (newEntry) => {
-   // Add newest entry to FRONT of array
-   // newest -> oldest
-   setEntries([newEntry, ...entries]);
- };
+  const entryAlreadyExists = entries.some(
+    (entry) => entry.date === newEntry.date
+  );
+
+  if (entryAlreadyExists) {
+    alert("You already have an entry for this date. Come back the next day.");
+    return false;
+  }
+
+  setEntries([newEntry, ...entries]);
+  return true;
+};
 
 
  return (

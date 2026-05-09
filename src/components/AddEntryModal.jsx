@@ -4,7 +4,6 @@
 // submit
 import { useState } from "react";
 
-
 const AddEntryModal = ({ onClose, onAddEntry }) => {
   const [formData, setFormData] = useState({
     title: "",
@@ -13,13 +12,10 @@ const AddEntryModal = ({ onClose, onAddEntry }) => {
     content: "",
   });
 
-
   const [error, setError] = useState("");
-
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-
 
     setFormData({
       ...formData,
@@ -27,10 +23,8 @@ const AddEntryModal = ({ onClose, onAddEntry }) => {
     });
   };
 
-
   const handleSubmit = (e) => {
     e.preventDefault();
-
 
     if (
       !formData.title ||
@@ -42,7 +36,6 @@ const AddEntryModal = ({ onClose, onAddEntry }) => {
       return;
     }
 
-
     const newEntry = {
       id: crypto.randomUUID(),
       title: formData.title,
@@ -51,26 +44,23 @@ const AddEntryModal = ({ onClose, onAddEntry }) => {
       content: formData.content,
     };
 
+    const wasAdded = onAddEntry(newEntry);
 
-    onAddEntry(newEntry);
-    onClose();
+    if (wasAdded) {
+      onClose();
+    }
   };
-
 
   return (
     <div className="modal modal-open">
       <div className="modal-box">
-        <h2 className="text-2xl font-bold mb-4">
-          Add Diary Entry
-        </h2>
-
+        <h2 className="text-2xl font-bold mb-4">Add Diary Entry</h2>
 
         {error && (
           <div className="alert alert-error mb-4">
             <span>{error}</span>
           </div>
         )}
-
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <input
@@ -82,7 +72,6 @@ const AddEntryModal = ({ onClose, onAddEntry }) => {
             className="input input-bordered w-full"
           />
 
-
           <input
             name="date"
             type="date"
@@ -90,7 +79,6 @@ const AddEntryModal = ({ onClose, onAddEntry }) => {
             onChange={handleChange}
             className="input input-bordered w-full"
           />
-
 
           <input
             name="imageUrl"
@@ -101,7 +89,6 @@ const AddEntryModal = ({ onClose, onAddEntry }) => {
             className="input input-bordered w-full"
           />
 
-
           <textarea
             name="content"
             placeholder="Content"
@@ -110,16 +97,10 @@ const AddEntryModal = ({ onClose, onAddEntry }) => {
             className="textarea textarea-bordered w-full"
           ></textarea>
 
-
           <div className="modal-action">
-            <button
-              type="button"
-              onClick={onClose}
-              className="btn"
-            >
+            <button type="button" onClick={onClose} className="btn">
               Cancel
             </button>
-
 
             <button type="submit" className="btn btn-primary">
               Save Entry
@@ -130,6 +111,5 @@ const AddEntryModal = ({ onClose, onAddEntry }) => {
     </div>
   );
 };
-
 
 export default AddEntryModal;
