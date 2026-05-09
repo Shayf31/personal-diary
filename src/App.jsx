@@ -1,111 +1,144 @@
-// Owns:
-
-// entries
-// selectedEntry
-// modal state
-
-// Passes props down.
-
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import AddEntryModal from "./components/AddEntryModal";
 
 
 function App() {
-  // Stores all diary entries
-  const [entries, setEntries] = useState([]);
+ // Stores ALL diary entries
+ const [entries, setEntries] = useState([]);
 
 
-  // Controls whether the Add Entry modal is shown
-  const [showAddModal, setShowAddModal] = useState(false);
+ // Controls whether the Add Entry modal is visible
+ const [showAddModal, setShowAddModal] = useState(false);
 
 
-  // Receives new entry data from AddEntryModal
-  const handleAddEntry = (newEntry) => {
-    setEntries([newEntry, ...entries]);
-  };
+ // ---------------------------------------------------
+ // LOAD ENTRIES WHEN APP STARTS
+ // ---------------------------------------------------
+ // useEffect with [] runs ONCE when component mounts
+ // This loads saved diary entries from localStorage
+ useEffect(() => {
+   // Get saved entries from browser storage
+   const savedEntries = JSON.parse(localStorage.getItem("diaryEntries"));
 
 
-  return (
-    <div className="min-h-screen bg-base-200">
-      <div className="max-w-6xl mx-auto p-6">
+   // If entries exist in storage,
+   // update React state
+   if (savedEntries) {
+     setEntries(savedEntries);
+   }
+ }, []);
 
 
-        <header className="navbar bg-base-100 rounded-box shadow mb-10">
-          <div className="flex-1">
-            <h1 className="text-3xl font-bold">
-              Personal Diary
-            </h1>
-          </div>
+ // ---------------------------------------------------
+ // SAVE ENTRIES WHENEVER ENTRIES CHANGES
+ // ---------------------------------------------------
+ // This runs every time the entries state updates
+ useEffect(() => {
+   // Convert JS array -> JSON string
+   // localStorage ONLY stores strings
+   localStorage.setItem("diaryEntries", JSON.stringify(entries));
+ }, [entries]);
 
 
-          <div className="flex-none">
-            <button
-              onClick={() => setShowAddModal(true)}
-              className="btn btn-primary"
-            >
-              Add Entry
-            </button>
-          </div>
-        </header>
+ // ---------------------------------------------------
+ // ADD NEW ENTRY
+ // ---------------------------------------------------
+ // Receives new entry object from AddEntryModal
+ const handleAddEntry = (newEntry) => {
+   // Add newest entry to FRONT of array
+   // newest -> oldest
+   setEntries([newEntry, ...entries]);
+ };
 
 
-        <section className="mb-6">
-          <h2 className="text-2xl font-semibold mb-2">
-            My Diary Entries
-          </h2>
+ return (
+   <div className="min-h-screen bg-base-200">
+     <div className="max-w-6xl mx-auto p-6">
+       {/* ===================================================
+           HEADER
+       =================================================== */}
+       <header className="navbar bg-base-100 rounded-box shadow mb-10">
+         <div className="flex-1">
+           <h1 className="text-3xl font-bold">Personal Diary</h1>
+         </div>
 
 
-          <p className="text-base-content/70">
-            Your memories, your story.
-          </p>
-        </section>
+         <div className="flex-none">
+           {/* Opens modal */}
+           <button
+             onClick={() => setShowAddModal(true)}
+             className="btn btn-primary"
+           >
+             Add Entry
+           </button>
+         </div>
+       </header>
 
 
-        {entries.length === 0 && (
-          <div className="alert">
-            <span>No diary entries yet. Click “Add Entry” to create one.</span>
-          </div>
-        )}
+       {/* ===================================================
+           PAGE INTRO
+       =================================================== */}
+       <section className="mb-6">
+         <h2 className="text-2xl font-semibold mb-2">My Diary Entries</h2>
 
 
-        <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {entries.map((entry) => (
-            <div key={entry.id} className="card bg-base-100 shadow-xl">
-              <figure>
-                <img
-                  src={entry.imageUrl}
-                  alt={entry.title}
-                  className="w-full h-48 object-cover"
-                />
-              </figure>
+         <p className="text-base-content/70">Your memories, your story.</p>
+       </section>
 
 
-              <div className="card-body">
-                <h3 className="card-title">
-                  {entry.title}
-                </h3>
+       {/* ===================================================
+           EMPTY STATE
+       =================================================== */}
+       {/* Shows ONLY when there are no entries */}
+       {entries.length === 0 && (
+         <div className="alert">
+           <span>No diary entries yet. Click "Add Entry" to create one.</span>
+         </div>
+       )}
 
 
-                <p className="text-base-content/60">
-                  {entry.date}
-                </p>
-              </div>
-            </div>
-          ))}
-        </section>
+       {/* ===================================================
+           ENTRY LIST
+       =================================================== */}
+       <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+         {/* Loop through entries array */}
+         {entries.map((entry) => (
+           <div key={entry.id} className="card bg-base-100 shadow-xl">
+             {/* Entry image */}
+             <figure>
+               <img
+                 src={entry.imageUrl}
+                 alt={entry.title}
+                 className="w-full h-48 object-cover"
+               />
+             </figure>
 
 
-        {showAddModal && (
-          <AddEntryModal
-            onClose={() => setShowAddModal(false)}
-            onAddEntry={handleAddEntry}
-          />
-        )}
+             {/* Card body */}
+             <div className="card-body">
+               <h3 className="card-title">{entry.title}</h3>
 
 
-      </div>
-    </div>
-  );
+               <p className="text-base-content/60">{entry.date}</p>
+             </div>
+           </div>
+         ))}
+       </section>
+
+
+       {/* ===================================================
+           ADD ENTRY MODAL
+       =================================================== */}
+       {/* Only render modal if state is true */}
+       {showAddModal && (
+         <AddEntryModal
+           onClose={() => setShowAddModal(false)}
+           onAddEntry={handleAddEntry}
+         />
+       )}
+     </div>
+   </div>
+ );
 }
 
 
