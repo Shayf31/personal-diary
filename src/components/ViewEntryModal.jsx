@@ -2,14 +2,10 @@ const ViewEntryModal = ({ entry, onClose }) => {
  return (
    <div className="modal modal-open">
      <div className="modal-box">
-       <h2 className="text-2xl font-bold mb-2">
-         {entry.title}
-       </h2>
+       <h2 className="text-2xl font-bold mb-2">{entry.title}</h2>
 
 
-       <p className="text-base-content/60 mb-4">
-         {entry.date}
-       </p>
+       <p className="text-base-content/60 mb-4">{entry.date}</p>
 
 
        <img
@@ -19,16 +15,11 @@ const ViewEntryModal = ({ entry, onClose }) => {
        />
 
 
-       <p className="whitespace-pre-wrap">
-         {entry.content}
-       </p>
+       <p className="whitespace-pre-wrap">{entry.content}</p>
 
 
        <div className="modal-action">
-         <button
-           onClick={onClose}
-           className="btn"
-         >
+         <button onClick={onClose} className="btn">
            Close
          </button>
        </div>
