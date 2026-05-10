@@ -15,11 +15,11 @@ const EntryList = ({ entries, onViewEntry }) => {
    
      {/* .map() loops through EVERY entry in "entries" array */}
      {/* For EACH entry -> create ONE EntryCard */}
+     {/* Pass click handler - send back to app jsx */}
      {entries.map((entry) => (
        <EntryCard
          key={entry.id}
          entry={entry}
-         {/* Pass click handler - send back to app jsx */}
          onViewEntry={onViewEntry}
        />
      ))}
