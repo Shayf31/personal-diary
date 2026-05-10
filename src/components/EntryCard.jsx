@@ -1,3 +1,13 @@
+// This component displays ONE diary entry card
+//
+// It receives TWO props:
+//
+// entry
+// -> the diary entry object
+//
+// onViewEntry
+// -> function that opens the detail modal
+//Sends the clicked entry upward to App.jsx
 const EntryCard = ({ entry, onViewEntry }) => {
  return (
    <div

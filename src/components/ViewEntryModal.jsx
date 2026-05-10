@@ -1,3 +1,13 @@
+// Responsible for displaying
+// the FULL diary entry details
+//
+// Receives TWO props:
+//
+// entry
+// -> the selected diary entry object
+//
+// onClose
+// -> function used to close the modal
 const ViewEntryModal = ({ entry, onClose }) => {
  return (
    <div className="modal modal-open">
@@ -19,6 +29,8 @@ const ViewEntryModal = ({ entry, onClose }) => {
 
 
        <div className="modal-action">
+
+        {/*/ User clicks Close-onClose runs- selectedEntry becomes null-modal disappears*/}          
          <button onClick={onClose} className="btn">
            Close
          </button>

@@ -4,112 +4,135 @@ import ViewEntryModal from "./components/ViewEntryModal";
 import Header from "./components/Header";
 import EntryList from "./components/EntryList";
 
-
 function App() {
- const [entries, setEntries] = useState([]);
- const [showAddModal, setShowAddModal] = useState(false);
- const [selectedEntry, setSelectedEntry] = useState(null);
+  // // Stores ALL diary entries
+ // Starts as an empty array
+  const [entries, setEntries] = useState([]);
+  // Controls whether the "Add Entry" modal is visible
+ // false = hidden
+  const [showAddModal, setShowAddModal] = useState(false);
+   // Stores the currently selected diary entry
+ // Used for the ViewEntryModal
+ // null = no entry selected
+  const [selectedEntry, setSelectedEntry] = useState(null);
+
+   // ---------------------------------------------------
+ // LOAD SAVED ENTRIES ON APP START
+ // ---------------------------------------------------
 
 
- useEffect(() => {
-   const savedEntries = JSON.parse(localStorage.getItem("diaryEntries"));
+ // useEffect with [] runs ONCE
+ // when the component first mounts
+ // Get saved diary entries from localStorage
+  useEffect(() => {
+    const savedEntries = JSON.parse(localStorage.getItem("diaryEntries"));
+
+    if (savedEntries) {
+      setEntries(savedEntries);
+    }
+  }, []);
+
+   // ---------------------------------------------------
+ // SAVE ENTRIES TO LOCALSTORAGE
+ // ---------------------------------------------------
 
 
-   if (savedEntries) {
-     setEntries(savedEntries);
-   }
- }, []);
+ // Runs EVERY time entries changes
+  useEffect(() => {
+    localStorage.setItem("diaryEntries", JSON.stringify(entries));
+  }, [entries]);
 
 
- useEffect(() => {
-   localStorage.setItem("diaryEntries", JSON.stringify(entries));
- }, [entries]);
+  // ---------------------------------------------------
+ // ADD NEW ENTRY
+ // ---------------------------------------------------
+
+ // Receives a new entry object
+ // from AddEntryModal component
+  const handleAddEntry = (newEntry) => {
+    // Check if an entry already exists
+   // for the selected date
+    const entryAlreadyExists = entries.some(
+      (entry) => entry.date === newEntry.date,
+    );
+
+    if (entryAlreadyExists) {
+      alert("You already have an entry for this date.");
+      return false;
+    }
 
 
- const handleAddEntry = (newEntry) => {
-   const entryAlreadyExists = entries.some(
-     (entry) => entry.date === newEntry.date,
-   );
+    // Add new entry to FRONT of array
+   // newest entries appear first
+    setEntries([newEntry, ...entries]);
+    return true;
+  };
 
 
-   if (entryAlreadyExists) {
-     alert("You already have an entry for this date.");
-     return false;
-   }
+  // ---------------------------------------------------
+ // OPEN ENTRY DETAIL MODAL
+ // ---------------------------------------------------
 
 
-   setEntries([newEntry, ...entries]);
-   return true;
- };
+ // Receives clicked entry from EntryCard comp
+ // Store clicked entry in state
+  const handleViewEntry = (entry) => {
+    setSelectedEntry(entry);
+  };
 
 
- const handleViewEntry = (entry) => {
-   setSelectedEntry(entry);
- };
+   // ---------------------------------------------------
+ // CLOSE ENTRY DETAIL MODAL - null
+ // ---------------------------------------------------
+  const handleCloseViewModal = () => {
+    setSelectedEntry(null);
+  };
 
+  return (
+    <div className="min-h-screen bg-base-200">
+      <div className="max-w-6xl mx-auto p-6">
 
- const handleCloseViewModal = () => {
-   setSelectedEntry(null);
- };
+      {/* Pass function into Header component */}
+       {/* Clicking button sets modal to visible */}
+        <Header onAddEntryClick={() => setShowAddModal(true)} />
 
+        <section className="mb-6">
+          <h2 className="text-2xl font-semibold mb-2">My Diary Entries</h2>
 
- return (
-   <div className="min-h-screen bg-base-200">
-     <div className="max-w-6xl mx-auto p-6">
+          <p className="text-base-content/70">Your memories, your story.</p>
+        </section>
 
+        {entries.length === 0 && (
+          <div className="alert">
+            <span>No diary entries yet. Click "Add Entry" to create one.</span>
+          </div>
+        )}
 
-       <Header
-         onAddEntryClick={() => setShowAddModal(true)}
-       />
+{/* Pass entries + click handler into EntryList */}
+        <EntryList entries={entries} onViewEntry={handleViewEntry} />
 
+{/* Only render modal if state is true */}
+        {showAddModal && (
+          <AddEntryModal
+          // Function to close modal
+            onClose={() => setShowAddModal(false)}
+            // Function to add new entry
+            onAddEntry={handleAddEntry}
+          />
+        )}
 
-       <section className="mb-6">
-         <h2 className="text-2xl font-semibold mb-2">
-           My Diary Entries
-         </h2>
-
-
-         <p className="text-base-content/70">
-           Your memories, your story.
-         </p>
-       </section>
-
-
-       {entries.length === 0 && (
-         <div className="alert">
-           <span>
-             No diary entries yet. Click "Add Entry" to create one.
-           </span>
-         </div>
-       )}
-
-
-       <EntryList
-         entries={entries}
-         onViewEntry={handleViewEntry}
-       />
-
-
-       {showAddModal && (
-         <AddEntryModal
-           onClose={() => setShowAddModal(false)}
-           onAddEntry={handleAddEntry}
-         />
-       )}
-
-
-       {selectedEntry && (
-         <ViewEntryModal
-           entry={selectedEntry}
-           onClose={handleCloseViewModal}
-         />
-       )}
-
-
-     </div>
-   </div>
- );
+{/* Only show if an entry is selected */}
+        {selectedEntry && (
+          <ViewEntryModal
+          // Pass selected entry data
+            entry={selectedEntry}
+            // Pass close function
+            onClose={handleCloseViewModal}
+          />
+        )}
+      </div>
+    </div>
+  );
 }
-
 
 export default App;
