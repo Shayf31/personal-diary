@@ -18,7 +18,7 @@ const Header = ({ onAddEntryClick }) => {
 
      <div className="flex-none">
        <button
-       User clicks button
+       //User clicks button
          // onAddEntryClick runs
          // showAddModal becomes true
          // AddEntryModal appears
