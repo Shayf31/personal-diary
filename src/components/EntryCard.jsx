@@ -1,11 +1,7 @@
 // This component displays ONE diary entry card
 //
-// It receives a prop:
-//
-// entry
+// It receives a prop: entry
 // -> the diary entry object
-//
-//Sends the clicked entry upward to App.jsx
 const EntryCard = ({ entry }) => {
  return (
    <div
