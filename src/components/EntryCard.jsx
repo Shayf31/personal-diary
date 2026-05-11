@@ -26,6 +26,9 @@ const EntryCard = ({ entry, onViewEntry }) => {
      <div className="card-body">
        <h3 className="card-title">{entry.title}</h3>
        <p className="text-base-content/60">{entry.date}</p>
+       <p className="break-words overflow-hidden">
+  {entry.content}
+</p>
      </div>
    </div>
  );

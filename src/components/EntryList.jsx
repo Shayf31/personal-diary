@@ -18,7 +18,7 @@ const EntryList = ({ entries, onViewEntry }) => {
      {/* Pass click handler - send back to app jsx */}
      {entries.map((entry) => (
        <EntryCard
-         key={entry.id}
+         key={entry.title}
          entry={entry}
          onViewEntry={onViewEntry}
        />

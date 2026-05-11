@@ -37,6 +37,7 @@ const AddEntryModal = ({ onClose, onAddEntry }) => {
      // Example:
      // title: "Beach Day"
 
+    //  Whichever input changed, update that matching field in formData.
     setFormData({
       ...formData,
       [name]: value,
@@ -65,12 +66,11 @@ const AddEntryModal = ({ onClose, onAddEntry }) => {
    // Build a new diary entry object
    // Generate unique ID
     const newEntry = {
-      id: crypto.randomUUID(),
-      title: formData.title,
-      date: formData.date,
-      imageUrl: formData.imageUrl,
-      content: formData.content,
-    };
+  title: formData.title,
+  date: formData.date,
+  imageUrl: formData.imageUrl,
+  content: formData.content,
+};
 
     // ---------------------------------------------------
    // SEND ENTRY TO APP.JSX

@@ -52,9 +52,13 @@ function App() {
   const handleAddEntry = (newEntry) => {
     // Check if an entry already exists
    // for the selected date
-    const entryAlreadyExists = entries.some(
-      (entry) => entry.date === newEntry.date,
-    );
+    let entryAlreadyExists = false;
+
+for (let entry of entries) {
+  if (entry.date === newEntry.date) {
+    entryAlreadyExists = true;
+  }
+}
 
     if (entryAlreadyExists) {
       alert("You already have an entry for this date.");
@@ -97,7 +101,7 @@ function App() {
         <Header onAddEntryClick={() => setShowAddModal(true)} />
 
         <section className="mb-6">
-          <h2 className="text-2xl font-semibold mb-2">My Diary Entries</h2>
+          <h2 className="text-2xl font-semibold mb-2">Your Diary Entries</h2>
 
           <p className="text-base-content/70">Your memories, your story.</p>
         </section>
