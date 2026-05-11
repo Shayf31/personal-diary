@@ -128,7 +128,7 @@ const AddEntryModal = ({ onClose, onAddEntry }) => {
               Cancel
             </button>
 
-            <button type="submit" className="btn btn-primary">
+            <button type="submit" className="btn btn-primary bg-blue-500 hover:bg-blue-400">
               Save Entry
             </button>
           </div>
