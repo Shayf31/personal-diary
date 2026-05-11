@@ -8,10 +8,10 @@
 // -> function that opens the Add Entry modal
 const Header = ({ onAddEntryClick }) => {
  return (
-   <header className="navbar bg-base-100 rounded-box shadow mb-10">
+   <header className="navbar bg-base-100 rounded-box shadow mb-10 px-6">
      <div className="flex-1">
-       <h1 className="text-3xl font-bold">
-         Personal Diary
+       <h1 className="text-3xl font-bold text-blue-500">
+         DiaryApp
        </h1>
      </div>
 
@@ -23,7 +23,7 @@ const Header = ({ onAddEntryClick }) => {
          // showAddModal becomes true
          // AddEntryModal appears
          onClick={onAddEntryClick}
-         className="btn btn-primary"
+         className="btn btn-primary bg-blue-500 hover:bg-blue-400 text-white"
        >
          Add Entry
        </button>
