@@ -105,41 +105,24 @@ const AddEntryModal = ({ onClose, onAddEntry }) => {
 {/*  // handleChange Updates state on change*/}
         <form onSubmit={handleSubmit} className="space-y-4">
 
-          <input
-            name="title"
-            type="text"
-            placeholder="Title"
-            value={formData.title}
-            onChange={handleChange}
+          <input name="title" type="text" placeholder="Title" value={formData.title} onChange={handleChange}
+            className="input input-bordered w-full"
+          />
+
+          <input name="date" type="date" value={formData.date} onChange={handleChange}
             className="input input-bordered w-full"
           />
 
           <input
-            name="date"
-            type="date"
-            value={formData.date}
-            onChange={handleChange}
+            name="imageUrl" type="text" placeholder="Image URL" value={formData.imageUrl} onChange={handleChange}
             className="input input-bordered w-full"
           />
 
-          <input
-            name="imageUrl"
-            type="text"
-            placeholder="Image URL"
-            value={formData.imageUrl}
-            onChange={handleChange}
-            className="input input-bordered w-full"
-          />
-
-          <textarea
-            name="content"
-            placeholder="Content"
-            value={formData.content}
-            onChange={handleChange}
+          <textarea name="content" placeholder="Content" value={formData.content} onChange={handleChange}
             className="textarea textarea-bordered w-full"
           ></textarea>
 
- {/* MODAL ACTION BUTTONS - CANCEL then SUBMIT(Clicking this Triggers handleSubmit*/}
+ {/* MODAL ACTION BUTTONS - CANCEL then SUBMIT(Clicking Submit Triggers handleSubmit*/}
           <div className="modal-action">
             <button type="button" onClick={onClose} className="btn">
               Cancel

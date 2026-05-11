@@ -7,6 +7,7 @@ function App() {
   // // Stores ALL diary entries
  // Starts as an empty array
   const [entries, setEntries] = useState([]);
+  
   // Controls whether the "Add Entry" modal is visible
  // false = hidden
   const [showAddModal, setShowAddModal] = useState(false);
@@ -38,7 +39,6 @@ function App() {
   // ---------------------------------------------------
  // ADD NEW ENTRY
  // -----------------------------------------------
-
  // Receives a new entry object
  // from AddEntryModal component
   const handleAddEntry = (newEntry) => {
