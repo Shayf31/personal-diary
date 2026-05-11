@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import AddEntryModal from "./components/AddEntryModal";
-import ViewEntryModal from "./components/ViewEntryModal";
 import Header from "./components/Header";
 import EntryList from "./components/EntryList";
 
@@ -11,16 +10,11 @@ function App() {
   // Controls whether the "Add Entry" modal is visible
  // false = hidden
   const [showAddModal, setShowAddModal] = useState(false);
-   // Stores the currently selected diary entry
- // Used for the ViewEntryModal
- // null = no entry selected
-  const [selectedEntry, setSelectedEntry] = useState(null);
+  
 
    // ---------------------------------------------------
  // LOAD SAVED ENTRIES ON APP START
  // ---------------------------------------------------
-
-
  // useEffect with [] runs ONCE
  // when the component first mounts
  // Get saved diary entries from localStorage
@@ -35,8 +29,6 @@ function App() {
    // ---------------------------------------------------
  // SAVE ENTRIES TO LOCALSTORAGE
  // ---------------------------------------------------
-
-
  // Runs EVERY time entries changes
   useEffect(() => {
     localStorage.setItem("diaryEntries", JSON.stringify(entries));
@@ -45,7 +37,7 @@ function App() {
 
   // ---------------------------------------------------
  // ADD NEW ENTRY
- // ---------------------------------------------------
+ // -----------------------------------------------
 
  // Receives a new entry object
  // from AddEntryModal component
@@ -73,25 +65,6 @@ for (let entry of entries) {
   };
 
 
-  // ---------------------------------------------------
- // OPEN ENTRY DETAIL MODAL
- // ---------------------------------------------------
-
-
- // Receives clicked entry from EntryCard comp
- // Store clicked entry in state
-  const handleViewEntry = (entry) => {
-    setSelectedEntry(entry);
-  };
-
-
-   // ---------------------------------------------------
- // CLOSE ENTRY DETAIL MODAL - null
- // ---------------------------------------------------
-  const handleCloseViewModal = () => {
-    setSelectedEntry(null);
-  };
-
   return (
     <div className="min-h-screen bg-base-200">
       <div className="max-w-6xl mx-auto p-6">
@@ -103,7 +76,7 @@ for (let entry of entries) {
         <section className="mb-6">
           <h2 className="text-2xl font-semibold mb-2">Your Diary Entries</h2>
 
-          <p className="text-base-content/70">Your memories, your story.</p>
+          <p className="text-base-content/70">Enter your stories here.</p>
         </section>
 
         {entries.length === 0 && (
@@ -113,7 +86,7 @@ for (let entry of entries) {
         )}
 
 {/* Pass entries + click handler into EntryList */}
-        <EntryList entries={entries} onViewEntry={handleViewEntry} />
+        <EntryList entries={entries} />
 
 {/* Only render modal if state is true */}
         {showAddModal && (
@@ -126,14 +99,7 @@ for (let entry of entries) {
         )}
 
 {/* Only show if an entry is selected */}
-        {selectedEntry && (
-          <ViewEntryModal
-          // Pass selected entry data
-            entry={selectedEntry}
-            // Pass close function
-            onClose={handleCloseViewModal}
-          />
-        )}
+        
       </div>
     </div>
   );

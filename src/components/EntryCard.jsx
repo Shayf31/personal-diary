@@ -1,18 +1,15 @@
 // This component displays ONE diary entry card
 //
-// It receives TWO props:
+// It receives a prop:
 //
 // entry
 // -> the diary entry object
 //
-// onViewEntry
-// -> function that opens the detail modal
 //Sends the clicked entry upward to App.jsx
-const EntryCard = ({ entry, onViewEntry }) => {
+const EntryCard = ({ entry }) => {
  return (
    <div
-     onClick={() => onViewEntry(entry)}
-     className="card bg-base-100 shadow-xl cursor-pointer hover:shadow-2xl"
+     className="card bg-base-100 shadow-xl transition duration-300 hover:scale-110 hover:-translate-y-2 hover:shadow-2xl"
    >
      <figure>
        <img
