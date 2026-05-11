@@ -26,35 +26,35 @@ Scaffold the app with Vite and use React as the UI framework.
 - [x] FR004 — TailwindCSS via npm  
 Install Tailwind through npm and configure it with Vite.
 
-- [ ] FR005 — State & Effects Management  
+- [x] FR005 — State & Effects Management  
 Use React hooks (`useState`, `useEffect`, etc.) appropriately for UI state and side-effects.
 
-- [ ] FR006 — Add Entry Button  
+- [x] FR006 — Add Entry Button  
 Provide an “Add Entry” button that opens an entry-creation modal. Control showing/hiding the modal with state.
 
-- [ ] FR007 — Add Entry Form Fields  
+- [x] FR007 — Add Entry Form Fields  
 Form must collect:
 - Title
 - Date
 - Image URL
 - Content
 
-- [ ] FR008 — LocalStorage Persistence  
+- [x] FR008 — LocalStorage Persistence  
 Store diary entries as an array in localStorage.
 
-- [ ] FR009 — One-Entry-Per-Day Check  
+- [x] FR009 — One-Entry-Per-Day Check  
 If an entry already exists for the selected day, prompt the user to come back the next day.
 
-- [ ] FR010 — Form Validation  
+- [x] FR010 — Form Validation  
 Block submission unless all fields are populated.
 
-- [ ] FR011 — Homepage List  
+- [x] FR011 — Homepage List  
 Display diary entries sorted newest-first.
 
-- [ ] FR012 — Load Entries on Startup  
+- [x] FR012 — Load Entries on Startup  
 Read and render stored entries when the app first mounts.
 
-- [ ] FR013 — Card Layout  
+- [x] FR013 — Card Layout  
 Show each entry as a card with:
 - Preview image
 - Date
@@ -87,8 +87,7 @@ Build the app with Vite and deploy the static assets on Render.
    - Content
 6. Form validation checks all fields
 7. Entry saves to localStorage
-8. Homepage updates with newest diary entry first
-9. User clicks an entry card
-10. Full diary entry opens in a modal
+8. Homepage updates with newest diary entry
+
 
 ---

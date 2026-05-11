@@ -9,15 +9,14 @@ function App() {
   const [entries, setEntries] = useState([]);
   
   // Controls whether the "Add Entry" modal is visible
- // false = hidden
+ // false hidden
   const [showAddModal, setShowAddModal] = useState(false);
   
 
    // ---------------------------------------------------
  // LOAD SAVED ENTRIES ON APP START
  // ---------------------------------------------------
- // useEffect with [] runs ONCE
- // when the component first mounts
+ // useEffect with [] runs ONCE when the component first mounts
  // Get saved diary entries from localStorage
   useEffect(() => {
     const savedEntries = JSON.parse(localStorage.getItem("diaryEntries"));
@@ -37,7 +36,7 @@ function App() {
 
 
   // ---------------------------------------------------
- // ADD NEW ENTRY
+ // ADD NEW ENTRY -comes up from AddEntryModal.jsx
  // -----------------------------------------------
  // Receives a new entry object
  // from AddEntryModal component
@@ -97,8 +96,6 @@ for (let entry of entries) {
             onAddEntry={handleAddEntry}
           />
         )}
-
-{/* Only show if an entry is selected */}
         
       </div>
     </div>
